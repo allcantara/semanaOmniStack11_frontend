@@ -9,7 +9,7 @@ import "./styles.css";
 import logo from "../../assets/logo.svg";
 
 export default () => {
-  const history = useHistory()
+  const history = useHistory();
   const ongName = localStorage.getItem("ongName");
   const ongId = localStorage.getItem("ongId");
   const [incidents, setIncidents] = useState([]);
@@ -19,10 +19,9 @@ export default () => {
       try {
         const response = await api.get("profile", {
           headers: {
-            Authorization: ongId
-          }
+            Authorization: ongId,
+          },
         });
-  
         setIncidents(response.data);
       } catch (error) {
         console.error(error);
@@ -30,35 +29,34 @@ export default () => {
       }
     }
 
-    getIncidens()
+    getIncidens();
   }, [ongId]);
 
-  const handleDeleteIncident = async id => {
+  const handleDeleteIncident = async (id) => {
     try {
       await api.delete(`/incidents/${id}`, {
         headers: {
           Authorization: ongId,
-        }
-      })
+        },
+      });
 
-      setIncidents(incidents.filter(item => item.id !== id))
+      setIncidents(incidents.filter((item) => item.id !== id));
     } catch (error) {
-      console.error(error)
-      alert('Falha ao excluir!')
+      console.error(error);
+      alert("Falha ao excluir!");
     }
-  }
+  };
 
   const handleLogout = () => {
-    localStorage.clear()
-    history.push('/')
-  }
-
+    localStorage.clear();
+    history.push("/");
+  };
 
   return (
     <div className="profile-container">
       <header>
         <img src={logo} alt="Be The Hero" />
-        <span>Bem vinda, {ongName}</span>
+        <span>Bem vindo(a), {ongName}</span>
 
         <Link className="button" to="/incidents/new">
           Cadastrar novo caso
@@ -71,7 +69,7 @@ export default () => {
       <h1>Casos cadastrados</h1>
 
       <ul>
-        {incidents.map(item => (
+        {incidents.map((item) => (
           <li key={item.id}>
             <strong>CASO:</strong>
             <p>{item.title}</p>
@@ -81,12 +79,10 @@ export default () => {
 
             <strong>VALOR:</strong>
             <p>
-              {
-                Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL'
-                }).format(item.value)
-              }
+              {Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(item.value)}
             </p>
 
             <button type="button" onClick={() => handleDeleteIncident(item.id)}>
