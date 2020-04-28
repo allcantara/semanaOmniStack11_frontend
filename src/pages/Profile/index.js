@@ -53,41 +53,51 @@ export default () => {
   };
 
   return (
-    <div className="profile-container">
-      <header>
-        <img src={logo} alt="Be The Hero" />
-        <span>Bem vindo(a), {ongName}</span>
+    <div className="container profile-container">
+      <header className="row text-center text-sm-left">
+        <div className="col-sm-6 mb-4 mb-md-0">
+          <img src={logo} alt="Be The Hero" className="img-fluid mb-1" />
+          <br />
+          <span>Bem vindo(a), {ongName}</span>
+        </div>
 
-        <Link className="button" to="/incidents/new">
-          Cadastrar novo caso
-        </Link>
-        <button type="button" onClick={() => handleLogout()}>
-          <FiPower size={18} color="#e02041" />
-        </button>
+        <div className="col-sm-6 d-sm-flex ml-sm-auto">
+          <Link className="button incident-button" to="/incidents/new">
+            Novo caso
+          </Link>
+          <button type="button" onClick={() => handleLogout()}>
+            <FiPower size={18} color="#e02041" />
+          </button>
+        </div>
       </header>
 
       <h1>Casos cadastrados</h1>
 
-      <ul>
+      <ul className="row">
         {incidents.map((item) => (
-          <li key={item.id}>
-            <strong>CASO:</strong>
-            <p>{item.title}</p>
+          <li key={item.id} className="col-sm-12 col-md-6 mt-3">
+            <div>
+              <strong>CASO:</strong>
+              <p>{item.title}</p>
 
-            <strong>DESCRIÇÃO:</strong>
-            <p>{item.description}</p>
+              <strong>DESCRIÇÃO:</strong>
+              <p>{item.description}</p>
 
-            <strong>VALOR:</strong>
-            <p>
-              {Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(item.value)}
-            </p>
+              <strong>VALOR:</strong>
+              <p>
+                {Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(item.value)}
+              </p>
 
-            <button type="button" onClick={() => handleDeleteIncident(item.id)}>
-              <FiTrash2 size={20} color="#a8a8b3" />
-            </button>
+              <button
+                type="button"
+                onClick={() => handleDeleteIncident(item.id)}
+              >
+                <FiTrash2 size={20} color="#a8a8b3" />
+              </button>
+            </div>
           </li>
         ))}
       </ul>
